@@ -1,0 +1,18 @@
+<template>
+    <lightning-card title="Invoice" icon-name="standard:user">
+            <lightning-layout class="container" multiple-rows>
+
+                <lightning-layout-item size="12">
+                    <lightning-datatable key-field="Id" data={cartProducts} columns={columns}>
+                    </lightning-datatable>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="12">
+                    <lightning-button variant="brand" label="Place Order" title="Click to place order"
+                        onclick={handlePlaceOrderClick}
+                        class="slds-m-left_x-small slds-align_absolute-center"></lightning-button>
+                </lightning-layout-item>
+
+            </lightning-layout>
+        </lightning-card>
+</template>

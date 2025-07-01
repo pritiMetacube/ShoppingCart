@@ -1,10 +1,55 @@
 <template>
-    <div style="height: 300px;">
-        <h1>Products</h1>
-        <lightning-datatable
-                key-field="Id"
-                data={productsData}
-                columns={columns}>
-        </lightning-datatable>
-    </div>
+    <template if:false={showCartSection}>
+        <lightning-card title="Products" icon-name="standard:user">
+            <lightning-layout class="container" multiple-rows>
+
+                <lightning-layout-item size="12">
+                    <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+                        <div>
+                            <lightning-input type="search" placeholder="Enter Product Name..."
+                                onchange={handleProductSearch}></lightning-input>
+                        </div>
+
+                        <div>
+                            <lightning-button variant="brand" label="Add To Cart"
+                                title="Click to add selected products to the cart" onclick={handleAddToCartClick}
+                                class="slds-m-left_x-small"></lightning-button>
+                            <lightning-button variant="brand" label="Go To Cart"
+                                title="Click to navigate to the cart section" onclick={handleGoToCartClick}
+                                class="slds-m-left_x-small"></lightning-button>
+                        </div>
+                    </div>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="12">
+                    <lightning-datatable lwc:ref="datatable" key-field="Id" data={filteredData} columns={columns}>
+                    </lightning-datatable>
+                </lightning-layout-item>
+
+
+                <lightning-layout-item size="12">
+                    <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+                        <div>
+                            <lightning-button label="First" title="First Set of Purchase Orders"
+                                onclick={handleFirstClick} class="slds-m-left_x-small"></lightning-button>
+                            <lightning-button label="Previous" title="Previous Set of Purchase Orders"
+                                onclick={handlePreviousClick} class="slds-m-left_x-small"></lightning-button>
+                        </div>
+
+                        <div>
+                            <lightning-button label="Next" title="Next Set of Purchase Orders" onclick={handleNextClick}
+                                class="slds-m-left_x-small"></lightning-button>
+                            <lightning-button label="Last" title="Last Set of Purchase Orders" onclick={handleLastClick}
+                                class="slds-m-left_x-small"></lightning-button>
+                        </div>
+                    </div>
+                </lightning-layout-item>
+
+            </lightning-layout>
+        </lightning-card>
+    </template>
+
+    <template if:true={showCartSection}>
+        <c-purchase-order-cart cart-products={cartProducts}></c-purchase-order-cart>
+    </template>
 </template>

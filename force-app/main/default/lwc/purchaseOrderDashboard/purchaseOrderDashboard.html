@@ -1,0 +1,39 @@
+<template>
+    <template if:false={showProductSection}>
+        <lightning-card title="My Orders" icon-name="standard:user">
+            <lightning-layout class="container" multiple-rows>
+                <lightning-layout-item size="12">
+                    <lightning-datatable key-field="Id" data={purchaseOrdersData} columns={columns}>
+                    </lightning-datatable>
+                </lightning-layout-item>
+
+
+                <lightning-layout-item size="12">
+                    <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+                        <div>
+                            <lightning-button label="First" title="First Set of Purchase Orders" onclick={handleFirstClick}
+                                class="slds-m-left_x-small"></lightning-button>
+                            <lightning-button label="Previous" title="Previous Set of Purchase Orders" onclick={handlePreviousClick}
+                                class="slds-m-left_x-small"></lightning-button>
+                        </div>
+
+                        <div>
+                            <lightning-button variant="brand" label="Add New Purchase Order" title="Click to add new purchase order"
+                                onclick={handleAddNewPOClick} class="slds-m-left_x-small"></lightning-button>
+                            <lightning-button label="Next" title="Next Set of Purchase Orders" onclick={handleNextClick}
+                                class="slds-m-left_x-small"></lightning-button>
+                            <lightning-button label="Last" title="Last Set of Purchase Orders" onclick={handleLastClick}
+                                class="slds-m-left_x-small"></lightning-button>
+                        </div>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+        </lightning-card>
+    </template>
+
+    <template if:true={showProductSection}>
+        <c-product-selector></c-product-selector>
+    </template>
+
+
+</template>

@@ -1,0 +1,25 @@
+<template>
+    <template if:false={showInvoiceSection}>
+        <lightning-card title="Cart" icon-name="standard:user">
+            <lightning-layout class="container" multiple-rows>
+
+                <lightning-layout-item size="12">
+                    <lightning-datatable key-field="Id" data={cartProducts} columns={cartColumns}>
+                    </lightning-datatable>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="12">
+                    <lightning-button variant="brand" label="CheckOut" title="Click to review and place order"
+                        onclick={handleCheckOutClick}
+                        class="slds-m-left_x-small slds-align_absolute-center"></lightning-button>
+                </lightning-layout-item>
+
+            </lightning-layout>
+        </lightning-card>
+    </template>
+
+    <template if:true={showInvoiceSection}>
+        <c-order-confirmation cart-products={cartProducts}></c-order-confirmation>
+    </template>
+
+</template>
