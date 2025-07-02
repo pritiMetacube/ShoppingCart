@@ -1,10 +1,13 @@
 <template>
     <template if:false={showInvoiceSection}>
+        <lightning-button label="Back" onclick={handleBack} class="slds-m-left_x-small"></lightning-button>
+        <br /><br />
         <lightning-card title="Cart" icon-name="standard:user">
             <lightning-layout class="container" multiple-rows>
 
                 <lightning-layout-item size="12">
-                    <lightning-datatable key-field="Id" data={cartProducts} columns={cartColumns}>
+                    <lightning-datatable key-field="Id" data={cartProducts} columns={cartColumns}
+                            onsave={handleSave} draft-values={saveDraftValues} onrowaction={handleRowAction}>
                     </lightning-datatable>
                 </lightning-layout-item>
 
@@ -19,7 +22,7 @@
     </template>
 
     <template if:true={showInvoiceSection}>
-        <c-order-confirmation cart-products={cartProducts}></c-order-confirmation>
+        <c-order-confirmation cart-products={cartProducts} onback={handleBackFromChild}></c-order-confirmation>
     </template>
 
 </template>

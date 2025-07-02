@@ -33,4 +33,8 @@ export default class purchaseOrderDashboard extends LightningElement {
     handleAddNewPOClick(){
         this.showProductSection = true;
     }
+
+    handleBackFromChild(){
+        this.showProductSection = false;
+    }
 }

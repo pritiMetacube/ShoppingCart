@@ -1,5 +1,8 @@
 <template>
     <template if:false={showCartSection}>
+        <lightning-button label="Back" onclick={handleBack} class="slds-m-left_x-small"></lightning-button>
+        <br /><br />
+
         <lightning-card title="Products" icon-name="standard:user">
             <lightning-layout class="container" multiple-rows>
 
@@ -50,6 +53,6 @@
     </template>
 
     <template if:true={showCartSection}>
-        <c-purchase-order-cart cart-products={cartProducts}></c-purchase-order-cart>
+        <c-purchase-order-cart cart-products={cartProducts} onback={handleBackFromChild} onsave={handleSaveFromChild} ondelete={handleDeleteFromChild}></c-purchase-order-cart>
     </template>
 </template>

@@ -11,4 +11,9 @@ const columns =[
 export default class OrderConfirmation extends LightningElement {
     @api cartProducts;
     columns = columns;
+
+    handleBack(){
+        const backEvent = new CustomEvent("back");
+        this.dispatchEvent(backEvent);
+    }
 }
