@@ -10,4 +10,25 @@ public with sharing class PurchaseOrderController {
             throw new AuraHandledException(ex.getMessage());
         }
     }
+
+    @AuraEnabled
+    public static Id createPurchaseOrder()
+    {
+        try{
+            PurchaseOrder__c purchaseOrder = new PurchaseOrder__c(
+                Name= generateName(),
+                Order_Date__c = Date.Today(),
+                Status__c = 'Submitted'
+            );
+            insert purchaseOrder;
+            return purchaseOrder.Id;
+        } catch(Exception ex){
+            throw new AuraHandledException(ex.getMessage());
+        }
+    }
+
+    public static String generateName(){
+        Integer randomNumber = Math.round(Math.random() * 100000);
+        return 'PO-'+String.valueOf(randomNumber);
+    }
 }

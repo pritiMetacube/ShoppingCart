@@ -18,7 +18,6 @@ const columns =[
 export default class PurchaseOrderCart extends LightningElement {
     showInvoiceSection = false;
 
-    //this property is public and can be set by a parent component.
     @api cartProducts;
     cartColumns = columns;
     saveDraftValues = [];
