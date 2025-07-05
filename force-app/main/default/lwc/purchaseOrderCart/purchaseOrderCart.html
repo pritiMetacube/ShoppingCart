@@ -2,8 +2,9 @@
     <template if:false={showInvoiceSection}>
         <lightning-button label="Back" onclick={handleBack} class="slds-m-left_x-small"></lightning-button>
         <br /><br />
+
         <lightning-card title="Cart" icon-name="standard:user">
-            <lightning-layout class="container" multiple-rows>
+            <lightning-layout class="slds-p-horizontal_medium" multiple-rows>
 
                 <lightning-layout-item size="12">
                     <lightning-datatable key-field="Id" data={cartProducts} columns={cartColumns}

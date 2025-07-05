@@ -1,16 +1,16 @@
 public with sharing class PurchaseOrderLineItemController {
     @AuraEnabled
-    public static void addPurchaseOrderLineItems(Id poId, List<Product2> cartProducts)
+    public static void addPurchaseOrderLineItems(Id poId, List<CartItemWrapper> cartProducts)
     {
         try{
             List<PurchaseOrderLineItem__c> purchaseOrderLineItems = new List<PurchaseOrderLineItem__c>();
-            for(Product2 cartItem: cartProducts)
+            for(CartItemWrapper cartItem: cartProducts)
             {
                 PurchaseOrderLineItem__c newPurchaseOrderLineItem = new PurchaseOrderLineItem__c(
                     Name = generateName(),
                     PurchaseOrder__c = poId,
                     Product__c = cartItem.Id,
-                    Quantity__c = cartItem.Quantity__c
+                    Quantity__c = cartItem.quantity
                 );
                 purchaseOrderLineItems.add(newPurchaseOrderLineItem);
             }

@@ -14,24 +14,28 @@ const columns =[
 export default class OrderConfirmation extends LightningElement {
     @api cartProducts;
     columns = columns;
+    invoiceNumber = Math.floor(Math.random()*1000000);
+    orderDate = new Date().toLocaleDateString(); 
 
     handleBack(){
         const backEvent = new CustomEvent("back");
         this.dispatchEvent(backEvent);
     }
 
-    handlePlaceOrderClick() {
-        console.log("button clicked");
-        cartProducts.forEach((item, index) => {
-            console.log(`Item ${index}: Id=${item.Id} (${typeof item.Id}), Quantity=${item.Quantity__c} (${typeof item.Quantity__c})`);
-        });
-        /*try {
-        
+    async handlePlaceOrderClick() {
+        try {
             const poId = await createPurchaseOrder();
-            console.log(`PO: ${poId}`);
-            await addPurchaseOrderLineItems(poId, cartProducts);
+            console.log(`PO: ${poId} type: (${typeof poId})`);
+
+            console.log(JSON.stringify(this.cartProducts));
+
+            const lightweightCart = this.cartProducts.map(p => ({
+                Id: p.Id,
+                quantity: p.Quantity__c
+            }));
+            await addPurchaseOrderLineItems(poId, lightweightCart);
             console.log("PO Line items added");
-            await updateProducts(cartProducts);
+            await updateProducts(lightweightCart);
             console.log("Products updated");
 
             this.dispatchEvent(
@@ -42,14 +46,7 @@ export default class OrderConfirmation extends LightningElement {
                 })
             );
         } catch (error) {
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Error',
-                    message: error.body.message,
-                    variant: 'error'
-                })
-            );
+            console.error(JSON.stringify(error));
         }
-            */
     }
 }

@@ -1,4 +1,4 @@
-public with sharing class ProductController {
+public with sharing class ProductController {    
     @AuraEnabled(cacheable=true)
     public static List<Product2> getproducts()
     {
@@ -12,15 +12,15 @@ public with sharing class ProductController {
     }
 
     @AuraEnabled
-    public static void updateProducts(List<Product2> cartProducts)
+    public static void updateProducts(List<CartItemWrapper> cartProducts)
     {
         try{
             List<Product2> updatedProducts = new List<Product2>();
 
-            for(Product2 cartItem: cartProducts)
+            for(CartItemWrapper cartItem: cartProducts)
             {
                 Product2 product = [SELECT Id, Quantity__c FROM Product2 WHERE Id = :cartItem.Id];
-                product.Quantity__c -= cartItem.Quantity__c;
+                product.Quantity__c -= cartItem.quantity;
                 updatedProducts.add(product);
             }
             update updatedProducts;

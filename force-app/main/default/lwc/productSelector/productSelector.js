@@ -1,4 +1,4 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, wire } from 'lwc';
 import getproducts from '@salesforce/apex/ProductController.getproducts';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
@@ -16,23 +16,16 @@ export default class ProductSelector extends LightningElement {
     filteredData = [];
     debounceTimeout;
     showCartSection = false;
-
     cartProducts = [];
 
-    connectedCallback() {
-        this.fetchProducts();
-    }
-
-    fetchProducts() {
-        getproducts()
-            .then(result => {
-                if (result) {
-                    this.productsData = result;
-                    this.filteredData = [...result]
-                }
-            }).catch(error => {
-                console.error('Eror in fetching products' + error);
-            });
+    @wire(getproducts)
+    wiredProducts({data, error}){
+        if(data){
+            this.productsData = data;
+            this.filteredData = [...data];
+        }else if(error){
+            console.error('Eror in fetching products' + error);
+        }
     }
 
     handleProductSearch(event) {

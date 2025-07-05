@@ -1,4 +1,4 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, wire } from 'lwc';
 import getpurchaseOrders from '@salesforce/apex/PurchaseOrderController.getpurchaseOrders';
 
 const columns =[
@@ -15,19 +15,14 @@ export default class purchaseOrderDashboard extends LightningElement {
     purchaseOrdersData = [];
     columns = columns;
 
-    connectedCallback(){
-        this.fetchPurchaseOrders();
-    }
-
-    fetchPurchaseOrders(){
-        getpurchaseOrders()
-        .then(result => {
-            if(result){
-                this.purchaseOrdersData = result;
-            }
-        }).catch(error => {
+    @wire(getpurchaseOrders)
+    wiredPurchaseOrders({data, error}){
+        if(data){
+            this.purchaseOrdersData = data;
+        }
+        else if(error){
             console.error('Eror in fetching purchase orders ' + error);
-        });
+        }
     }
 
     handleAddNewPOClick(){

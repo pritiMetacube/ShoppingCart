@@ -1,7 +1,7 @@
 <template>
     <template if:false={showProductSection}>
         <lightning-card title="My Orders" icon-name="standard:user">
-            <lightning-layout class="container" multiple-rows>
+            <lightning-layout class="slds-p-horizontal_medium" multiple-rows>
                 <lightning-layout-item size="12">
                     <lightning-datatable key-field="Id" data={purchaseOrdersData} columns={columns}>
                     </lightning-datatable>
