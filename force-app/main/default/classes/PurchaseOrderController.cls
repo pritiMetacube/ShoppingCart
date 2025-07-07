@@ -1,13 +1,26 @@
 public with sharing class PurchaseOrderController {
     @AuraEnabled(cacheable=true)
-    public static List<PurchaseOrder__c> getpurchaseOrders()
+    public static List<PurchaseOrder__c> getpurchaseOrders(PurchaseOrderRequest request)
     {
         try{
-            List<PurchaseOrder__c> purchaseOrders = [SELECT Id, Name, Order_Date__c, Status__c, Total_Amount__c FROM PurchaseOrder__c LIMIT 500];
+            Integer offset = (request.pageNumber-1)*request.pageSize;
+            String orderBy = ' ORDER BY ' + request.sortBy + ' ' + request.sortDirection;
+            String limitClause = ' LIMIT '+request.pageSize + ' OFFSET '+offset;
+            String query = 'SELECT Id, Name, Order_Date__c, Status__c, Total_Amount__c FROM PurchaseOrder__c' + orderBy + limitClause;
+            List<PurchaseOrder__c> purchaseOrders = Database.query(query);
             return purchaseOrders;
         }
         catch(Exception ex){
             throw new AuraHandledException(ex.getMessage());
+        }
+    }
+    
+    @AuraEnabled(cacheable=true)    
+    public static Integer getTotalPurchaseOrderCount(){
+        try {
+            return [SELECT Count() FROM PurchaseOrder__c];
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
         }
     }
 

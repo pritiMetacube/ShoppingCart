@@ -25,7 +25,10 @@
                 </lightning-layout-item>
 
                 <lightning-layout-item size="12">
-                    <lightning-datatable lwc:ref="datatable" key-field="Id" data={filteredData} columns={columns}>
+                    <lightning-datatable lwc:ref="datatable" key-field="Id" 
+                    data={filteredData} columns={columns}
+                    sorted-by={productRequest.sortBy} sorted-direction={productRequest.sortDirection}
+                    onsort={handleSort}>
                     </lightning-datatable>
                 </lightning-layout-item>
 
@@ -34,15 +37,15 @@
                     <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
                         <div>
                             <lightning-button label="First" title="First Set of Purchase Orders"
-                                onclick={handleFirstClick} class="slds-m-left_x-small"></lightning-button>
+                                onclick={handleFirstPage} class="slds-m-left_x-small"></lightning-button>
                             <lightning-button label="Previous" title="Previous Set of Purchase Orders"
-                                onclick={handlePreviousClick} class="slds-m-left_x-small"></lightning-button>
+                                onclick={handlePreviousPage} class="slds-m-left_x-small"></lightning-button>
                         </div>
 
                         <div>
-                            <lightning-button label="Next" title="Next Set of Purchase Orders" onclick={handleNextClick}
+                            <lightning-button label="Next" title="Next Set of Purchase Orders" onclick={handleNextPage}
                                 class="slds-m-left_x-small"></lightning-button>
-                            <lightning-button label="Last" title="Last Set of Purchase Orders" onclick={handleLastClick}
+                            <lightning-button label="Last" title="Last Set of Purchase Orders" onclick={handleLastPage}
                                 class="slds-m-left_x-small"></lightning-button>
                         </div>
                     </div>

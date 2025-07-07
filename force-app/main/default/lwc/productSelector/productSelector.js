@@ -1,15 +1,23 @@
 import { LightningElement, wire } from 'lwc';
 import getproducts from '@salesforce/apex/ProductController.getproducts';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import getTotalProductCount from '@salesforce/apex/ProductController.getTotalProductCount';
 
 const columns = [
-    { label: 'Name', fieldName: 'Name' },
-    { label: 'Price', fieldName: 'Price__c', type: 'currency' },
-    { label: 'Product Code', fieldName: 'ProductCode', type: 'text' },
-    { label: 'Available Units', fieldName: 'Quantity__c', type: 'number' },
+    { label: 'Name', fieldName: 'Name', sortable:true },
+    { label: 'Price', fieldName: 'Price__c', type: 'currency', sortable:true },
+    { label: 'Product Code', fieldName: 'ProductCode', type: 'text', sortable:true },
+    { label: 'Available Units', fieldName: 'Quantity__c', type: 'number', sortable:true },
 ];
 
 export default class ProductSelector extends LightningElement {
+    productRequest = {
+        pageNumber: 1,
+        pageSize: 10,
+        sortBy: 'Name',
+        sortDirection: 'asc',
+    };
+    totalNumberOfProducts = 0;
     productsData = [];
     columns = columns;
     searchKey = '';
@@ -18,7 +26,7 @@ export default class ProductSelector extends LightningElement {
     showCartSection = false;
     cartProducts = [];
 
-    @wire(getproducts)
+    @wire(getproducts, {request: '$productRequest'})
     wiredProducts({data, error}){
         if(data){
             this.productsData = data;
@@ -28,6 +36,58 @@ export default class ProductSelector extends LightningElement {
         }
     }
 
+    @wire(getTotalProductCount)
+    wireTotalProductCount({data,error}) {
+        if(data) {
+            this.totalNumberOfProducts = data;
+            console.log(`Total number of products: ${this.totalNumberOfProducts}`);
+        } else if(error){
+            console.error('Error in fetching total number of products' + error);
+        }
+    }
+
+    handleSort(event) {
+        const { fieldName, sortDirection } = event.detail;
+        this.productRequest = {
+            ...this.productRequest,
+            sortBy: fieldName,
+            sortDirection: sortDirection
+        };
+    }
+
+    handleFirstPage(){
+        this.productRequest = {
+            ...this.productRequest,
+            pageNumber: 1
+        };
+        console.log(`First pageNumber: ${this.productRequest.pageNumber}`);
+    }
+
+    handleLastPage(){
+        const lastPageNumber = Math.ceil(this.totalNumberOfProducts/this.productRequest.pageSize);
+        this.productRequest = {
+            ...this.productRequest,
+            pageNumber: lastPageNumber
+        };
+        console.log(`Last pageNumber: ${this.productRequest.pageNumber}`);
+    }
+
+    handleNextPage(){
+        this.productRequest = {
+            ...this.productRequest,
+            pageNumber: this.productRequest.pageNumber + 1
+        };
+        console.log(`Next pageNumber: ${this.productRequest.pageNumber}`);
+    }
+
+    handlePreviousPage(){
+        this.productRequest = {
+            ...this.productRequest,
+            pageNumber: this.productRequest.pageNumber - 1
+        };
+        console.log(`Previous pageNumber: ${this.productRequest.pageNumber}`);
+    }
+    
     handleProductSearch(event) {
         this.searchKey = event.target.value.trim().toLowerCase();
         clearTimeout(this.debounceTimeout);

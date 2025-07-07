@@ -3,7 +3,9 @@
         <lightning-card title="My Orders" icon-name="standard:user">
             <lightning-layout class="slds-p-horizontal_medium" multiple-rows>
                 <lightning-layout-item size="12">
-                    <lightning-datatable key-field="Id" data={purchaseOrdersData} columns={columns}>
+                    <lightning-datatable key-field="Id" data={purchaseOrdersData} columns={columns}
+                    sorted-by={purchaseOrderRequest.sortBy} sorted-direction={purchaseOrderRequest.sortDirection}
+                    onsort={handleSort}>
                     </lightning-datatable>
                 </lightning-layout-item>
 
@@ -11,18 +13,18 @@
                 <lightning-layout-item size="12">
                     <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
                         <div>
-                            <lightning-button label="First" title="First Set of Purchase Orders" onclick={handleFirstClick}
+                            <lightning-button label="First" title="First Set of Purchase Orders" onclick={handleFirstPage}
                                 class="slds-m-left_x-small"></lightning-button>
-                            <lightning-button label="Previous" title="Previous Set of Purchase Orders" onclick={handlePreviousClick}
+                            <lightning-button label="Previous" title="Previous Set of Purchase Orders" onclick={handlePreviousPage}
                                 class="slds-m-left_x-small"></lightning-button>
                         </div>
 
                         <div>
                             <lightning-button variant="brand" label="Add New Purchase Order" title="Click to add new purchase order"
                                 onclick={handleAddNewPOClick} class="slds-m-left_x-small"></lightning-button>
-                            <lightning-button label="Next" title="Next Set of Purchase Orders" onclick={handleNextClick}
+                            <lightning-button label="Next" title="Next Set of Purchase Orders" onclick={handleNextPage}
                                 class="slds-m-left_x-small"></lightning-button>
-                            <lightning-button label="Last" title="Last Set of Purchase Orders" onclick={handleLastClick}
+                            <lightning-button label="Last" title="Last Set of Purchase Orders" onclick={handleLastPage}
                                 class="slds-m-left_x-small"></lightning-button>
                         </div>
                     </div>
