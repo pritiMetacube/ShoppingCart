@@ -1,7 +1,7 @@
 import { LightningElement, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import createPurchaseOrder from '@salesforce/apex/PurchaseOrderController.createPurchaseOrder';
-import addPurchaseOrderLineItems from '@salesforce/apex/PurchaseOrderLineItemController.addPurchaseOrderLineItems';
+import createPurchaseOrderLineItems from '@salesforce/apex/PurchaseOrderLineItemController.createPurchaseOrderLineItems';
 import updateProducts from '@salesforce/apex/ProductController.updateProducts';
 
 const columns = [
@@ -30,7 +30,7 @@ export default class OrderConfirmation extends LightningElement {
                 console.log(`Purchase Order Id: ${poId} type: (${typeof poId})`);
 
                 console.log(JSON.stringify(this.cartProducts));
-                return addPurchaseOrderLineItems({ poId: poId, cartProducts: this.cartProducts });
+                return createPurchaseOrderLineItems({ poId: poId, cartProducts: this.cartProducts });
             })
             .then(() => {
                 console.log("Purchase Order Line items added successfully.");

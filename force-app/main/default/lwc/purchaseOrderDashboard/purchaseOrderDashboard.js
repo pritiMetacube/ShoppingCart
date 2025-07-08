@@ -1,5 +1,5 @@
 import { LightningElement, wire } from 'lwc';
-import getpurchaseOrders from '@salesforce/apex/PurchaseOrderController.getpurchaseOrders';
+import getPurchaseOrders from '@salesforce/apex/PurchaseOrderController.getPurchaseOrders';
 import getTotalPurchaseOrderCount from '@salesforce/apex/PurchaseOrderController.getTotalPurchaseOrderCount';
 
 const columns =[
@@ -24,7 +24,7 @@ export default class purchaseOrderDashboard extends LightningElement {
     purchaseOrdersData = [];
     columns = columns;
 
-    @wire(getpurchaseOrders,{request: '$purchaseOrderRequest'})
+    @wire(getPurchaseOrders,{request: '$purchaseOrderRequest'})
     wiredPurchaseOrders({data, error}){
         if(data){
             this.purchaseOrdersData = data;

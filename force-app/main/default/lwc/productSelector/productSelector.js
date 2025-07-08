@@ -1,5 +1,5 @@
 import { LightningElement, wire } from 'lwc';
-import getproducts from '@salesforce/apex/ProductController.getproducts';
+import getProducts from '@salesforce/apex/ProductController.getProducts';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getTotalProductCount from '@salesforce/apex/ProductController.getTotalProductCount';
 
@@ -26,7 +26,7 @@ export default class ProductSelector extends LightningElement {
     showCartSection = false;
     cartProducts = [];
 
-    @wire(getproducts, {request: '$productRequest'})
+    @wire(getProducts, {request: '$productRequest'})
     wiredProducts({data, error}){
         if(data){
             this.productsData = data;
