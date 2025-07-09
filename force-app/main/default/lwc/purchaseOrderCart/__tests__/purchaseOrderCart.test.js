@@ -16,4 +16,13 @@ describe('c-purchase-order-cart', () => {
         document.body.appendChild(element);
         expect(1).toBe(1);
     });
+
+    it('renders lightning-datatable', () => {
+        const element = createElement('c-purchase-order-cart', {
+            is: PurchaseOrderCart
+        });
+        document.body.appendChild(element);
+
+        expect(document.body.contains(element)).toBe(true);
+    });
 });

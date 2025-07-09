@@ -16,4 +16,13 @@ describe('c-product-selector', () => {
         document.body.appendChild(element);
         expect(1).toBe(1);
     });
+
+    it('renders lightning-datatable', () => {
+        const element = createElement('c-product-selector', {
+            is: ProductSelector
+        });
+        document.body.appendChild(element);
+
+        expect(document.body.contains(element)).toBe(true);
+    });
 });

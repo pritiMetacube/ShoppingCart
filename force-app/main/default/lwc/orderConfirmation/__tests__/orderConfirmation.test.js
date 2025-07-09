@@ -16,4 +16,13 @@ describe('c-order-confirmation', () => {
         document.body.appendChild(element);
         expect(1).toBe(1);
     });
+
+    it('renders lightning-datatable', () => {
+        const element = createElement('c-order-confirmation', {
+            is: OrderConfirmation
+        });
+        document.body.appendChild(element);
+
+        expect(document.body.contains(element)).toBe(true);
+    });
 });
