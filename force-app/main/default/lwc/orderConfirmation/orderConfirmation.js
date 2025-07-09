@@ -9,7 +9,7 @@ const columns = [
     { label: 'Price', fieldName: 'Price__c', type: 'currency' },
     { label: 'Product Code', fieldName: 'ProductCode', type: 'text' },
     { label: 'Units', fieldName: 'Quantity__c', type: 'number' },
-    { label: 'Total', fieldName: '', type: 'currency' },
+    { label: 'Total', fieldName: 'TotalPrice', type: 'currency' },
 ];
 
 export default class OrderConfirmation extends LightningElement {
@@ -39,7 +39,6 @@ export default class OrderConfirmation extends LightningElement {
             })
             .then(() => {
                 console.log("Products quantity updated successfully.");
-                this.cartProducts = [];
 
                 this.dispatchEvent(
                     new ShowToastEvent({

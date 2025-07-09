@@ -91,15 +91,13 @@ export default class ProductSelector extends LightningElement {
     handleProductSearch(event) {
         this.searchKey = event.target.value.trim().toLowerCase();
         clearTimeout(this.debounceTimeout);
-        this.debounceTimeout = setTimeout(() => {
-            if (this.searchKey) {
-                this.filteredData = this.productsData.filter(row =>
-                    row.Name?.toLowerCase().includes(this.searchKey)
-                );
-            } else {
-                this.filteredData = [...this.productsData];
-            }
-        }, 300);
+        if (this.searchKey) {
+            this.filteredData = this.productsData.filter(row =>
+                row.Name?.toLowerCase().includes(this.searchKey)
+            );
+        } else {
+            this.filteredData = [...this.productsData];
+        }
     }
 
     handleAddToCartClick() {
@@ -124,8 +122,9 @@ export default class ProductSelector extends LightningElement {
 
             if (existingCartItem) {
                 existingCartItem.Quantity__c += 1;
+                existingCartItem.TotalPrice = existingCartItem.Quantity__c * existingCartItem.Price__c;
             } else {
-                this.cartProducts.push({ ...row, Quantity__c: 1 });
+                this.cartProducts.push({ ...row, Quantity__c: 1, TotalPrice: row.Price__c });
             }
 
             this.filteredData = this.filteredData.map(item => {

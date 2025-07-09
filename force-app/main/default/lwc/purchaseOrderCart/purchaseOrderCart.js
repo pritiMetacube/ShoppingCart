@@ -38,7 +38,6 @@ export default class PurchaseOrderCart extends LightningElement {
     handleSave(event) {
         this.saveDraftValues = event.detail.draftValues;
 
-        // REVISIT
         const saveEvent = new CustomEvent("save", {
             detail: { updatedRows: this.saveDraftValues }
         });
